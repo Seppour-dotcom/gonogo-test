@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+
+Go / No-Go Pro
+
+</title>
+
+<link rel="stylesheet"
+      href="style.css">
+
+</head>
+
+<body>
+
+<div id="app">
+
+<!-- =========================
+     صفحه ورود
+========================= -->
+
+<section id="startScreen">
+
+<div class="card">
+
+<h1>
+
+آزمون Go / No-Go
+
+</h1>
+
+<p class="subtitle">
+
+نسخه پژوهشی
+
+</p>
+
+<label>
+
+نام آزمودنی
+
+<input
+id="participantName"
+type="text"
+placeholder="مثلاً علی رضایی">
+
+</label>
+
+<label>
+
+کد آزمودنی
+
+<input
+id="participantCode"
+type="text"
+placeholder="مثلاً 14001">
+
+</label>
+
+<label>
+
+سن
+
+<input
+id="participantAge"
+type="number">
+
+</label>
+
+<label>
+
+جنسیت
+
+<select id="participantGender">
+
+<option value="male">
+
+پسر
+
+</option>
+
+<option value="female">
+
+دختر
+
+</option>
+
+</select>
+
+</label>
+
+<hr>
+
+<h2>
+
+راهنمای آزمون
+
+</h2>
+
+<div class="guide">
+
+<div>
+
+🟩
+
+اگر مربع سبز دیدید
+
+کلید Space را فشار دهید.
+
+</div>
+
+<div>
+
+🟥
+
+اگر مربع قرمز دیدید
+
+هیچ کاری انجام ندهید.
+
+</div>
+
+</div>
+
+<ul>
+
+<li>
+
+۱۰ Trial تمرینی
+
+</li>
+
+<li>
+
+۷۰ Trial اصلی
+
+</li>
+
+<li>
+
+مدت نمایش هر محرک:
+
+۵۰۰ ms
+
+</li>
+
+<li>
+
+فاصله بین محرک‌ها:
+
+۵۰۰ ms
+
+</li>
+
+</ul>
+
+<button id="startButton">
+
+شروع آزمون
+
+</button>
+
+</div>
+
+</section>
+
+<!-- =========================
+     شمارش معکوس
+========================= -->
+
+<section
+id="countdownScreen"
+class="hidden">
+
+<div id="countdownNumber">
+
+3
+
+</div>
+
+</section>
+
+<!-- =========================
+     صفحه آزمون
+========================= -->
+
+<section
+id="testScreen"
+class="hidden">
+
+<div id="topBar">
+
+<div id="phaseLabel">
+
+تمرین
+
+</div>
+
+<div id="trialCounter">
+
+1 / 80
+
+</div>
+
+</div>
+
+<div id="progressContainer">
+
+<div id="progressBar">
+
+</div>
+
+</div>
+
+<div id="stimulusContainer">
+
+<div id="stimulus">
+
+</div>
+
+</div>
+
+<div id="message">
+
+برای مربع سبز کلید Space را فشار دهید.
+
+</div>
+
+</section>
+<!-- =========================
+     صفحه نتایج
+========================= -->
+
+<section
+id="resultScreen"
+class="hidden">
+
+<div class="resultCard">
+
+<h1>
+
+نتایج آزمون
+
+</h1>
+
+<div id="summaryPanel">
+
+<div class="statBox">
+<span>Accuracy</span>
+<strong id="accuracyValue">0%</strong>
+</div>
+
+<div class="statBox">
+<span>Correct</span>
+<strong id="correctValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Incorrect</span>
+<strong id="incorrectValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Commission</span>
+<strong id="commissionValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Omission</span>
+<strong id="omissionValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Mean RT</span>
+<strong id="meanValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Median RT</span>
+<strong id="medianValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>SD RT</span>
+<strong id="sdValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>Hit Rate</span>
+<strong id="hitRateValue">0</strong>
+</div>
+
+<div class="statBox">
+<span>False Alarm</span>
+<strong id="falseAlarmValue">0</strong>
+</div>
+
+</div>
+
+<div class="buttonRow">
+
+<button id="csvButton">
+
+دانلود CSV
+
+</button>
+
+<button id="jsonButton">
+
+دانلود JSON
+
+</button>
+
+<button id="restartButton">
+
+شروع مجدد آزمون
+
+</button>
+
+</div>
+
+<div id="trialTableContainer">
+
+<table id="trialTable">
+
+<thead>
+
+<tr>
+
+<th>Trial</th>
+
+<th>Phase</th>
+
+<th>Stimulus</th>
+
+<th>Response</th>
+
+<th>RT</th>
+
+<th>Result</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<script src="random.js"></script>
+
+<script src="stats.js"></script>
+
+<script src="csv.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
