@@ -1,92 +1,3 @@
-<!doctype html>
-<html lang="fa" dir="rtl">
-
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Go / No-Go</title>
-
-<style>
-body{
-    font-family:tahoma;
-    background:#1b1b1b;
-    color:white;
-    text-align:center;
-    margin:0;
-}
-#wrap{
-    max-width:800px;
-    margin:auto;
-    padding:20px;
-}
-#stim{
-    width:140px;
-    height:140px;
-    margin:25px auto;
-    border:4px solid white;
-    display:none;
-}
-button,input{
-    padding:8px;
-    margin:4px;
-}
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    color:black;
-}
-td,th{
-    border:1px solid #aaa;
-    padding:5px;
-    font-size:12px;
-}
-</style>
-
-</head>
-
-<body>
-
-<div id="wrap">
-
-<h2>آزمون Go / No-Go</h2>
-
-<div id="form">
-
-نام
-<input id="n">
-
-کد
-<input id="c">
-
-سن
-<input id="a" size="3">
-
-<p>
-🟩 مربع سبز: Space یا دکمه پاسخ
-<br><br>
-🟥 مربع قرمز: هیچ کاری انجام ندهید
-</p>
-
-<button onclick="start()">شروع آزمون</button>
-
-</div>
-
-<div id="count"></div>
-
-<div id="stim"></div>
-
-<button id="resp" style="display:none;font-size:22px;padding:14px 35px;">
-پاسخ
-</button>
-
-<div id="out"></div>
-
-</div>
-
-<script>
-
 const practice=[
 ...Array(6).fill("G"),
 ...Array(4).fill("R")
@@ -109,9 +20,12 @@ let trials=[];
 let res=[];
 let i=-1;
 let pressed=false;
+let stimulusOn=false;   // جدید
 let t0=0;
 
 function respond(){
+
+if(!stimulusOn) return;   // فقط هنگام نمایش محرک
 
 if(pressed) return;
 if(i<0) return;
@@ -137,6 +51,9 @@ document.getElementById("resp").onclick=respond;
 function start(){
 
 document.getElementById("form").style.display="none";
+
+// دکمه فقط یک بار نمایش داده می‌شود
+resp.style.display="inline-block";
 
 trials=[
 ...shuffle(practice.slice()),
@@ -183,8 +100,9 @@ return;
 
 pressed=false;
 
+stimulusOn=true;
+
 stim.style.display="block";
-resp.style.display="inline-block";
 
 stim.style.background=
 trials[i]=="G" ?
@@ -203,7 +121,9 @@ rt:""
 setTimeout(function(){
 
 stim.style.display="none";
-resp.style.display="none";
+
+// دکمه همچنان دیده می‌شود اما غیرفعال است
+stimulusOn=false;
 
 setTimeout(next,500);
 
@@ -212,6 +132,9 @@ setTimeout(next,500);
 }
 
 function finish(){
+
+stimulusOn=false;
+resp.style.display="none";
 
 let cor=0;
 let com=0;
@@ -358,8 +281,3 @@ a.download="results.csv";
 a.click();
 
 }
-
-</script>
-
-</body>
-</html>
