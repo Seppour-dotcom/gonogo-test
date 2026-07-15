@@ -9,17 +9,92 @@ td,th{border:1px solid #bbb;padding:4px;font-size:12px}
 </style></head><body><div id=wrap>
 <h2>آزمون Go / No-Go</h2>
 <div id=form>نام <input id=n> کد <input id=c> سن <input id=a size=3>
-<p>🟩 مربع سبز: Space &nbsp;&nbsp; 🟥 مربع قرمز: هیچ کاری نکنید</p>
+<p> 🟩 مربع سبز: کلید Space یا دکمه «پاسخ» <br><br> 🟥 مربع قرمز: هیچ کاری انجام ندهید </p>
 <button onclick=start()>شروع</button></div>
-<div id=count></div><div id=stim></div><div id=out></div></div>
+<div id=count></div><div id=stim></div><div id=out></div><div id=count></div>
+
+<div id=stim></div>
+
+<button id="resp" style="display:none;font-size:22px;padding:14px 35px;margin:20px;cursor:pointer;">
+پاسخ
+</button>
+
+<div id=out></div>
 <script>
 const prac=[...Array(6).fill('G'),...Array(4).fill('R')],main=[...Array(42).fill('G'),...Array(28).fill('R')];
 function sh(x){for(let i=x.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];}return x}
 let t=[],i=-1,pressed=false,t0,res=[];
+function respond(){
+
+    if(pressed || i<0) return;
+
+    pressed=true;
+
+    res[i].pressed=true;
+
+    res[i].rt=Math.round(performance.now()-t0);
+
+}
 function start(){form.style.display='none';t=[...sh(prac.slice()),...sh(main.slice())];let c=3;count.innerHTML='<h1>'+c+'</h1>';let iv=setInterval(()=>{c--;count.innerHTML='<h1>'+c+'</h1>';if(c==0){clearInterval(iv);count.innerHTML='';next();}},1000)}
-document.onkeydown=e=>{if(e.code!='Space'||pressed||i<0)return;e.preventDefault();pressed=true;res[i].pressed=true;res[i].rt=Math.round(performance.now()-t0);}
-function next(){i++;if(i>=t.length)return finish();pressed=false;stim.style.display='block';stim.style.background=t[i]=='G'?'#18c441':'#d22';t0=performance.now();res[i]={phase:i<10?'تمرین':'اصلی',stim:t[i],pressed:false,rt:''};setTimeout(()=>{stim.style.display='none';setTimeout(next,500)},500)}
-function finish(){let cor=0,com=0,omi=0,rts=[];let rows='';
+document.onkeydown=e=>{
+
+    if(e.code==="Space"){
+
+        e.preventDefault();
+
+        respond();
+
+    }
+
+};
+
+resp.onclick=respond;
+
+document.addEventListener("touchstart",function(e){
+
+    if(resp.style.display==="none") return;
+
+    e.preventDefault();
+
+    respond();
+
+},{passive:false});
+function next(){
+
+    i++;
+
+    if(i>=t.length)return finish();
+
+    pressed=false;
+
+    stim.style.display='block';
+
+    resp.style.display='inline-block';
+
+    stim.style.background=t[i]=='G'
+        ?'#18c441'
+        :'#d22';
+
+    t0=performance.now();
+
+    res[i]={
+        phase:i<10?'تمرین':'اصلی',
+        stim:t[i],
+        pressed:false,
+        rt:''
+    };
+
+    setTimeout(()=>{
+
+        stim.style.display='none';
+
+        resp.style.display='none';
+
+        setTimeout(next,500);
+
+    },500);
+
+}
 res.forEach((r,k)=>{let ok,txt;
 if(r.stim=='G'){if(r.pressed){ok=true;cor++;rts.push(r.rt);txt='✅ صحیح'}else{ok=false;omi++;txt='❌ Omission';}}
 else{if(r.pressed){ok=false;com++;txt='❌ Commission'}else{ok=true;cor++;txt='✅ صحیح';}}
