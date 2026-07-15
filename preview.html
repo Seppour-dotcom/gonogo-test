@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        آزمون Go / No-Go
+    </title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div id="app">
+
+    <h1>
+        آزمون Go / No-Go
+    </h1>
+
+    <div id="startScreen">
+
+        <div class="card">
+
+            <h2>
+                اطلاعات آزمودنی
+            </h2>
+
+            <label>
+
+                نام
+
+                <input
+                    id="name"
+                    type="text">
+
+            </label>
+
+            <label>
+
+                کد آزمودنی
+
+                <input
+                    id="code"
+                    type="text">
+
+            </label>
+
+            <label>
+
+                سن
+
+                <input
+                    id="age"
+                    type="number">
+
+            </label>
+
+            <label>
+
+                جنسیت
+
+                <select id="gender">
+
+                    <option>پسر</option>
+
+                    <option>دختر</option>
+
+                </select>
+
+            </label>
+
+            <hr>
+
+            <h3>
+
+                راهنمای آزمون
+
+            </h3>
+
+            <p>
+
+                🟩
+                اگر مربع سبز دیدید
+                کلید Space را فشار دهید.
+
+            </p>
+
+            <p>
+
+                🟥
+                اگر مربع قرمز دیدید
+                هیچ کلیدی فشار ندهید.
+
+            </p>
+
+            <ul>
+
+                <li>
+                    ابتدا ۱۰ آزمون تمرینی اجرا می‌شود.
+                </li>
+
+                <li>
+                    سپس ۷۰ آزمون اصلی آغاز می‌شود.
+                </li>
+
+                <li>
+                    هر محرک ۵۰۰ میلی‌ثانیه نمایش داده می‌شود.
+                </li>
+
+                <li>
+                    بین دو محرک ۵۰۰ میلی‌ثانیه فاصله وجود دارد.
+                </li>
+
+            </ul>
+
+            <button id="startButton">
+
+                شروع آزمون
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div id="countdown"
+         class="hidden">
+
+        <h1 id="countNumber">
+
+            3
+
+        </h1>
+
+    </div>
+
+
+
+
+
+    <div id="testScreen"
+         class="hidden">
+
+        <div id="progressContainer">
+
+            <div id="progressBar">
+
+            </div>
+
+        </div>
+
+        <div id="trialText">
+
+            Trial
+
+        </div>
+
+        <div id="stimulus">
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div id="resultScreen"
+         class="hidden">
+
+        <h2>
+
+            نتایج آزمون
+
+        </h2>
+
+        <div id="summary">
+
+        </div>
+
+        <button id="downloadCSV">
+
+            دانلود CSV
+
+        </button>
+
+        <button id="restart">
+
+            شروع مجدد
+
+        </button>
+
+        <div id="tableContainer">
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="random.js"></script>
+
+<script src="stats.js"></script>
+
+<script src="csv.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
