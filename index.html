@@ -54,17 +54,35 @@ td,th{
 
 <div id="form">
 
-نام
-<input id="n">
-
-کد
-<input id="c">
-
-سن
-<input id="a" size="3">
+<p>
+تعداد Trial
+<select id="trialCount">
+<option>50</option>
+<option>55</option>
+<option>60</option>
+<option>65</option>
+<option selected>70</option>
+</select>
+</p>
 
 <p>
-🟩 مربع سبز: Space یا دکمه پاسخ
+مدت نمایش محرک
+<select id="speed">
+<option>500</option>
+<option>550</option>
+<option>600</option>
+<option>650</option>
+<option>700</option>
+<option>750</option>
+<option>800</option>
+<option>850</option>
+<option selected>900</option>
+</select>
+میلی‌ثانیه
+</p>
+
+<p>
+🟩 مربع سبز: Space یا لمس صفحه
 <br><br>
 🟥 مربع قرمز: هیچ کاری انجام ندهید
 </p>
@@ -121,6 +139,7 @@ let res=[];
 let i=-1;
 let pressed=false;
 let stimulusOn=false;   // جدید
+let stimTime=900;
 let t0=0;
 
 function respond(){
@@ -146,18 +165,29 @@ respond();
 
 }
 
-document.getElementById("resp").onclick=respond;
+document.body.onclick=respond;
+document.body.ontouchstart=respond;
 
 function start(){
 
 document.getElementById("form").style.display="none";
 
-// دکمه فقط یک بار نمایش داده می‌شود
-resp.style.display="inline-block";
+// خواندن تنظیمات انتخاب‌شده توسط کاربر
+stimTime = parseInt(document.getElementById("speed").value);
+let totalTrials = parseInt(document.getElementById("trialCount").value);
+
+// این قسمت را بعداً تغییر می‌دهیم
+let greens=Math.round(totalTrials*0.6);
+let reds=totalTrials-greens;
+
+let selected=[
+...Array(greens).fill("G"),
+...Array(reds).fill("R")
+];
 
 trials=[
 ...shuffle(practice.slice()),
-...shuffle(main.slice())
+...shuffle(selected)
 ];
 
 let c=3;
@@ -222,12 +252,11 @@ setTimeout(function(){
 
 stim.style.display="none";
 
-// دکمه همچنان دیده می‌شود اما غیرفعال است
 stimulusOn=false;
 
-setTimeout(next,950);
+setTimeout(next,stimTime);
 
-},950);
+},stimTime);
 
 }
 
