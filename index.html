@@ -164,9 +164,13 @@ respond();
 }
 
 }
+document.addEventListener("pointerdown",function(e){
 
-document.body.onclick=respond;
-document.body.ontouchstart=respond;
+    if(!stimulusOn) return;
+
+    respond();
+
+});
 
 function start(){
 
